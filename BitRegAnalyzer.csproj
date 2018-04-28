@@ -54,10 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RegistryLevelData.cs" />
-    <Compile Include="RegistryEntry.cs" />
-    <Compile Include="RegistryKeyReadResult.cs" />
-    <Compile Include="RegistrySearcher.cs" />
+    <Compile Include="RegAnalysis\InaccessibleKey.cs" />
+    <Compile Include="RegAnalysis\RegistryAnalyzer.cs" />
+    <Compile Include="RegAnalysis\RegistryLevelData.cs" />
+    <Compile Include="RegAnalysis\RegistryEntry.cs" />
+    <Compile Include="RegAnalysis\RegistryKeyReadResult.cs" />
+    <Compile Include="RegAnalysis\RegistrySearcher.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

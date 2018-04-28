@@ -20,18 +20,18 @@ namespace BitRegAnalyzer
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {        
+    {
+        public RegistryAnalyzer RegAnalyzer;
+
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            RegAnalyzer = new RegistryAnalyzer();                
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            RegistrySearch searcher = new RegistrySearch();
-            //searcher.DoSearchOne();
-            RegistryKey search_one_top_key = Registry.LocalMachine.OpenSubKey("SOFTWARE");
-            searcher.SearchRegistrySect(search_one_top_key, @"C:\Program Files (x86)\AviSynth+\plugins64+");
+           
         }
     }
 }
