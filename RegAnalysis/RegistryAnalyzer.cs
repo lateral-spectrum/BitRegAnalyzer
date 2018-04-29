@@ -9,21 +9,24 @@ namespace BitRegAnalyzer
 {
     public static class RegistryAnalyzer
     {
-        public static void CollectRegistryData()
-        {            
-            RegistryKey[] keys_to_search = new RegistryKey[]
-            {
-                Registry.LocalMachine.OpenSubKey("SOFTWARE")
-            };
-
-            RegistryDataCollector[] data_collectors = new RegistryDataCollector[keys_to_search.Length];
+        public static RegistryDataCollector[] CollectRegistryData(List<RegistryKey> keys_to_search)
+        {                       
+            RegistryDataCollector[] data_collectors = new RegistryDataCollector[keys_to_search.Count];
             for (int i = 0; i < data_collectors.Length; i++)
             {
                 data_collectors[i] = new RegistryDataCollector(keys_to_search[i]);                    
                 data_collectors[i].Run();
+                
             }
             
-            int test = 0; 
+            return data_collectors;
+        }
+
+        public static List<RegistryLevelData> RegistryDataSearch(string term)
+        {
+            List<RegistryLevelData> matching_levels = new List<RegistryLevelData>();
+
+            return matching_levels;
         }
 
 

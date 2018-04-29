@@ -25,29 +25,48 @@ namespace BitRegAnalyzer
         public MainWindow(App main)
         {
             MainApp = main;
-            InitializeComponent();            
+            InitializeComponent();     
+            
+            if (AdminPermissionChecker.IsAdministrator())
+            {           
+                AdminPermissionWarningLabel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                AdminPermissionWarningLabel.Visibility = Visibility.Visible;
+            }            
         }      
 
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Thread LoadingBarThread = new Thread(DoProgressBar);
-            //LoadingBarThread.Start();
-
-            MainProgressBar.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                new Action(DoProgressBar));
+        {            
+            string term = TermTextBox.Text;
 
             Console.WriteLine("Collecting registry data");
-            RegistryAnalyzer.CollectRegistryData();
+            //Thread collection_thread = new Thread();
+            MainProgressBar.Value = 0.5;
+
+            List<RegistryKey> keys_to_search = new List<RegistryKey>();
+            if (Convert.ToBoolean(CheckBoxCurrentUser.IsChecked))
+            {
+                keys_to_search.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE"));
+            }
+            if (Convert.ToBoolean(CheckBoxLocalMachine.IsChecked)) 
+            {
+                keys_to_search.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE"));
+            }
+
             
+            
+            RegistryAnalyzer.CollectRegistryData(keys_to_search);            
         }
 
         private void DoProgressBar()
         {
-            while (MainProgressBar.Value < 100)
-            {
-                MainProgressBar.Value += 3;
-                Thread.Sleep(750);
-            }            
+            //while (MainProgressBar.Value < 100)
+            //{
+            //    MainProgressBar.Value += 3;
+            //    Thread.Sleep(750);
+            //}            
         }
     }
 }

@@ -12,7 +12,9 @@ namespace BitRegAnalyzer
     {         
         void AppStartup(object sender, StartupEventArgs e)
         {
-            Console.WriteLine("Application Startup Running");             
+            Console.WriteLine("Application Startup Running");
+
+            DatabaseManager.InitializeSchema();
 
             MainWindow mainWindow = new MainWindow(this);         
             mainWindow.Show();           

@@ -8,10 +8,14 @@
         Title="BitRegAnalyzer" 
         MaxHeight="350" MinHeight="350" Height="350" Width="574.444" MaxWidth="574.444" MinWidth="574.444">
     <Grid Margin="0,0,0.444,0.111">
-        <Button x:Name="RunAnalysisButton" Content="Run Analysis" HorizontalAlignment="Left" Margin="440,52,0,0" VerticalAlignment="Top" Width="92" Height="23" Padding="1" Click="RunAnalysisButton_Click"/>
-        <ProgressBar x:Name="MainProgressBar" Height="19" VerticalAlignment="Top" Margin="103,104,99.334,0"/>
+        <Button x:Name="RunAnalysisButton" Content="Run Search" HorizontalAlignment="Left" Margin="440,52,0,0" VerticalAlignment="Top" Width="92" Height="23" Padding="1" Click="RunAnalysisButton_Click"/>
+        <ProgressBar x:Name="MainProgressBar" Height="19" VerticalAlignment="Top" Margin="103,166,99.334,0" Minimum="0" Maximum="100" Value="0"/>
         <TextBox x:Name="TermTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="390" Margin="32,52,0,0" Padding="5,1,0,2"/>
         <Label Content="Search Value:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,21,0,0" Width="264" Padding="0,5,5,5"/>
+        <CheckBox x:Name="CheckBoxLocalMachine" Content="HKEY_CURRENT_MACHINE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,130,0,0" IsChecked="True"/>
+        <CheckBox x:Name="CheckBoxCurrentUser" Content="HKEY_CURRENT_USER" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,130,0,0" Width="138" IsChecked="True"/>
+        <Label Content="Check 'Software' Key in:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,91,0,0" Width="156" Padding="0,5,5,5"/>
+        <Label x:Name="AdminPermissionWarningLabel" Content="Application not running as Adminstrator. Some keys will be unavailable. " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,279,0,0" Width="482" Foreground="Red"/>
 
     </Grid>
 </Window>
