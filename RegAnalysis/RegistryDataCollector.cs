@@ -4,20 +4,22 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.Win32;
+using System.Windows.Threading;
 
 namespace BitRegAnalyzer
 {    
     public class RegistryDataCollector
     {
-        public RegistryKey TopLevelKey;
-        public List<RegistryLevelData> RegistryLevelDatas;
+        public RegistryKey TopLevelKey;        
+        public List<RegistryEntry> RegistryEntries; 
         public List<InaccessibleKey> InaccessibleKeysDatas;
 
-        public RegistryDataCollector(RegistryKey top_level_key)
+        public RegistryDataCollector (RegistryKey top_level_key)
         {
             TopLevelKey = top_level_key;
-            RegistryLevelDatas = new List<RegistryLevelData>();
+            RegistryEntries = new List<RegistryEntry>();
             InaccessibleKeysDatas = new List<InaccessibleKey>();            
         }          
 
@@ -27,26 +29,35 @@ namespace BitRegAnalyzer
         }
 
         private void RecursivelyCollectKeyLevelData(RegistryKey key)
-        {
-            RegistryLevelData level_data = new RegistryLevelData(key);
-
+        {                
             string[] sub_key_names = key.GetSubKeyNames();
-            level_data.ValueNames = new List<string>(key.GetValueNames());
-            level_data.Values = new List<string>();
+            string[] value_names = key.GetValueNames();                        
 
-            foreach (string vn in level_data.ValueNames)
+            foreach (string vn in value_names)
             {
-                string val = key.GetValue(vn).ToString();
-                level_data.Values.Add(val);
-            }
+                string val = key.GetValue(vn).ToString();                
+                RegistryEntry entry = new RegistryEntry();
+                entry.KeyName = vn;
+                entry.Value = val;
+                entry.RegistryLocation = key.ToString();
+                RegistryEntries.Add(entry);
 
-            RegistryLevelDatas.Add(level_data);
+                //Thread ui_update_thread = new Thread(() => { });
+                RegistryAnalyzer.Main_Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    RegistryAnalyzer.ActiveRegistryLocation = entry.RegistryLocation;
+                    RegistryAnalyzer.ActiveRegistryValue = val;
+                }), DispatcherPriority.ContextIdle);
+                    
+                Console.WriteLine(key.ToString() + " Value: " + val);
+            }                        
             
             foreach (string sub_k in sub_key_names)
             {
                 try
                 {
                     RegistryKey sk = key.OpenSubKey(sub_k, false);
+                    Console.WriteLine("Subkey: " + sk.ToString());
                     RecursivelyCollectKeyLevelData(sk);
                 }
                 catch (SecurityException ex)

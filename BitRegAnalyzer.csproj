@@ -77,11 +77,10 @@
     </ApplicationDefinition>
     <Compile Include="RegAnalysis\InaccessibleKey.cs" />
     <Compile Include="RegAnalysis\RegistryAnalyzer.cs" />
-    <Compile Include="RegAnalysis\RegistryLevelData.cs" />
     <Compile Include="RegAnalysis\RegistryEntry.cs" />
     <Compile Include="RegAnalysis\RegistryKeyReadResult.cs" />
     <Compile Include="RegAnalysis\RegistryDataCollector.cs" />
-    <Compile Include="SQLite\DatabaseManager.cs" />
+    <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Utils\AdminPermissionChecker.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

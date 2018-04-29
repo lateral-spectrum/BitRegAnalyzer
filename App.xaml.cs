@@ -16,8 +16,9 @@ namespace BitRegAnalyzer
 
             DatabaseManager.InitializeSchema();
 
-            MainWindow mainWindow = new MainWindow(this);         
-            mainWindow.Show();           
+            MainWindow main_window = new MainWindow(this);
+            main_window.Show();           
+            RegistryAnalyzer.Main_Window = main_window;
         }
     }
 }

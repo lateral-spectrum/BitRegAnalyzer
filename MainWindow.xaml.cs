@@ -38,26 +38,32 @@ namespace BitRegAnalyzer
         }      
 
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
-        {            
-            string term = TermTextBox.Text;
+        {
+            SetUIMode(false);
+            string term = TermTextBox.Text;            
 
-            Console.WriteLine("Collecting registry data");
-            //Thread collection_thread = new Thread();
-            MainProgressBar.Value = 0.5;
+            Console.WriteLine("Collecting registry data");            
+            MainProgressBar.Value = 50;
 
             List<RegistryKey> keys_to_search = new List<RegistryKey>();
             if (Convert.ToBoolean(CheckBoxCurrentUser.IsChecked))
             {
                 keys_to_search.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE"));
             }
-            if (Convert.ToBoolean(CheckBoxLocalMachine.IsChecked)) 
+            if (Convert.ToBoolean(CheckBoxLocalMachine.IsChecked))
             {
                 keys_to_search.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE"));
             }
 
-            
-            
-            RegistryAnalyzer.CollectRegistryData(keys_to_search);            
+            Thread analysis_thread = new Thread(() => RegistryAnalyzer.CollectRegistryData(keys_to_search));
+            analysis_thread.Start();
+
+            while (analysis_thread.IsAlive)
+            {
+                Thread.Sleep(100);
+            }
+
+            SetUIMode(true);
         }
 
         private void DoProgressBar()
@@ -67,6 +73,14 @@ namespace BitRegAnalyzer
             //    MainProgressBar.Value += 3;
             //    Thread.Sleep(750);
             //}            
+        }
+
+        public void SetUIMode(bool target_enabled)
+        {
+            RunAnalysisButton.IsEnabled = target_enabled;
+            CheckBoxCurrentUser.IsEnabled = target_enabled;
+            CheckBoxLocalMachine.IsEnabled = target_enabled;
+            TermTextBox.IsEnabled = target_enabled;
         }
     }
 }

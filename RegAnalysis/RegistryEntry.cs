@@ -8,20 +8,20 @@ namespace BitRegAnalyzer
 {
     public class RegistryEntry
     {
-        public string Path;
+        public string KeyName;
         public string Value;
         public string RegistryLocation; 
 
         public RegistryEntry()
         {
-            this.Path = "";
+            this.KeyName = "";
             this.Value = "";
             this.RegistryLocation = ""; 
         }
 
-        public RegistryEntry(string path, string value, string registry_location)
+        public RegistryEntry(string key_name, string value, string registry_location)
         {
-            this.Path = path;
+            this.KeyName = key_name;
             this.Value = value;
             this.RegistryLocation = registry_location; 
         }
