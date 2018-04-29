@@ -7,41 +7,23 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace BitRegAnalyzer
-{
-    public class RegistrySearch
+{    
+    public class RegistryDataCollector
     {
-        public List<RegistryEntry> SearchResults;
+        public RegistryKey TopLevelKey;
         public List<RegistryLevelData> RegistryLevelDatas;
         public List<InaccessibleKey> InaccessibleKeysDatas;
 
-        public RegistrySearch()
+        public RegistryDataCollector(RegistryKey top_level_key)
         {
-            this.SearchResults = new List<RegistryEntry>();
-            this.RegistryLevelDatas = new List<RegistryLevelData>();
-        }
+            TopLevelKey = top_level_key;
+            RegistryLevelDatas = new List<RegistryLevelData>();
+            InaccessibleKeysDatas = new List<InaccessibleKey>();            
+        }          
 
-        public void AnalyzeRegistrySect(RegistryKey top_level_key)
+        public void Run()
         {
-            Console.WriteLine("Reading Registry...");
-
-            RecursivelyCollectKeyLevelData(top_level_key);                      
-        }
-
-        private RegistryLevelData CollectKeyLevelData(RegistryKey parent_key)
-        {
-            RegistryLevelData level_data = new RegistryLevelData(parent_key);
-
-            string[] sub_key_names = parent_key.GetSubKeyNames();                  
-            level_data.ValueNames = new List<string>(parent_key.GetValueNames());
-            level_data.Values = new List<string>();            
-
-            foreach (string vn in level_data.ValueNames)
-            {
-                string val = parent_key.GetValue(vn).ToString();
-                level_data.Values.Add(val);
-            }            
-
-            return level_data;
+            RecursivelyCollectKeyLevelData(TopLevelKey);
         }
 
         private void RecursivelyCollectKeyLevelData(RegistryKey key)
@@ -56,7 +38,9 @@ namespace BitRegAnalyzer
             {
                 string val = key.GetValue(vn).ToString();
                 level_data.Values.Add(val);
-            }     
+            }
+
+            RegistryLevelDatas.Add(level_data);
             
             foreach (string sub_k in sub_key_names)
             {
@@ -69,12 +53,9 @@ namespace BitRegAnalyzer
                 {
                     Console.WriteLine("Couldn't access location: " + sub_k);                    
                     InaccessibleKey no_access_key = new InaccessibleKey(sub_k, key.Name);
+                    InaccessibleKeysDatas.Add(no_access_key);
                 }                                
             }           
-        }
-        
-
-
-
+        }        
     }
 }

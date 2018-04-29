@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace BitRegAnalyzer
-{
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+{   
     public partial class App : Application
-    {        
+    {         
+        void AppStartup(object sender, StartupEventArgs e)
+        {
+            Console.WriteLine("Application Startup Running");             
 
-
+            MainWindow mainWindow = new MainWindow(this);         
+            mainWindow.Show();           
+        }
     }
 }

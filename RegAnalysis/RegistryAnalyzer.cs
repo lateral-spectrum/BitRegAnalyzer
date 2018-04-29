@@ -7,13 +7,25 @@ using Microsoft.Win32;
 
 namespace BitRegAnalyzer
 {
-    public class RegistryAnalyzer
+    public static class RegistryAnalyzer
     {
-        public void AnalyzeRegistry()
-        {
-            RegistrySearch searcher = new RegistrySearch();
-            RegistryKey search_one_top_key = Registry.LocalMachine.OpenSubKey("SOFTWARE");
-            searcher.AnalyzeRegistrySect(search_one_top_key);
+        public static void CollectRegistryData()
+        {            
+            RegistryKey[] keys_to_search = new RegistryKey[]
+            {
+                Registry.LocalMachine.OpenSubKey("SOFTWARE")
+            };
+
+            RegistryDataCollector[] data_collectors = new RegistryDataCollector[keys_to_search.Length];
+            for (int i = 0; i < data_collectors.Length; i++)
+            {
+                data_collectors[i] = new RegistryDataCollector(keys_to_search[i]);                    
+                data_collectors[i].Run();
+            }
+            
+            int test = 0; 
         }
+
+
     }
 }
