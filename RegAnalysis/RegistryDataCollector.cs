@@ -14,22 +14,37 @@ namespace BitRegAnalyzer
     {
         public RegistryKey TopLevelKey;        
         public List<RegistryEntry> RegistryEntries; 
-        public List<InaccessibleKey> InaccessibleKeysDatas;
+        public List<string> InaccessibleEntries;
 
-        public RegistryDataCollector (RegistryKey top_level_key)
+        private MainWindow main_window;
+        private RegistryAnalyzer analyzer;
+
+        public static bool CollectionCancelled;
+
+        public RegistryDataCollector (RegistryKey top_level_key, RegistryAnalyzer lyzer)
         {
+            analyzer = lyzer; 
             TopLevelKey = top_level_key;
             RegistryEntries = new List<RegistryEntry>();
-            InaccessibleKeysDatas = new List<InaccessibleKey>();            
+            InaccessibleEntries = new List<string>();
+            CollectionCancelled = false; 
         }          
 
         public void Run()
-        {
+        {            
+            int num_sub_keys = TopLevelKey.GetSubKeyNames().Length;
+            analyzer.NumKeysRecorded += num_sub_keys;
             RecursivelyCollectKeyLevelData(TopLevelKey);
         }
 
         private void RecursivelyCollectKeyLevelData(RegistryKey key)
         {                
+            if (CollectionCancelled)
+            {
+                Console.WriteLine("Collection has been aborted.");
+                return; 
+            }
+
             string[] sub_key_names = key.GetSubKeyNames();
             string[] value_names = key.GetValueNames();                        
 
@@ -42,29 +57,26 @@ namespace BitRegAnalyzer
                 entry.RegistryLocation = key.ToString();
                 RegistryEntries.Add(entry);
 
-                //Thread ui_update_thread = new Thread(() => { });
-                RegistryAnalyzer.Main_Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    RegistryAnalyzer.ActiveRegistryLocation = entry.RegistryLocation;
-                    RegistryAnalyzer.ActiveRegistryValue = val;
-                }), DispatcherPriority.ContextIdle);
-                    
-                Console.WriteLine(key.ToString() + " Value: " + val);
+                analyzer.ActiveRegistryLocation = entry.RegistryLocation;
+                analyzer.ActiveRegistryValue = val;                                                
             }                        
             
             foreach (string sub_k in sub_key_names)
             {
                 try
                 {
-                    RegistryKey sk = key.OpenSubKey(sub_k, false);
-                    Console.WriteLine("Subkey: " + sk.ToString());
+                    if (CollectionCancelled)
+                    {
+                        Console.WriteLine("Collection has been aborted.");
+                        return;
+                    }
+                    RegistryKey sk = key.OpenSubKey(sub_k, false);                   
                     RecursivelyCollectKeyLevelData(sk);
                 }
                 catch (SecurityException ex)
-                {
-                    Console.WriteLine("Couldn't access location: " + sub_k);                    
-                    InaccessibleKey no_access_key = new InaccessibleKey(sub_k, key.Name);
-                    InaccessibleKeysDatas.Add(no_access_key);
+                {                                                                             
+                    string no_access_location = sub_k.ToString();
+                    InaccessibleEntries.Add(no_access_location);
                 }                                
             }           
         }        

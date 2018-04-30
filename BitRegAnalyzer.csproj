@@ -75,7 +75,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RegAnalysis\InaccessibleKey.cs" />
     <Compile Include="RegAnalysis\RegistryAnalyzer.cs" />
     <Compile Include="RegAnalysis\RegistryEntry.cs" />
     <Compile Include="RegAnalysis\RegistryKeyReadResult.cs" />

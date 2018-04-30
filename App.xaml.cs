@@ -9,7 +9,9 @@ using System.Windows;
 namespace BitRegAnalyzer
 {   
     public partial class App : Application
-    {         
+    {
+        public RegistryAnalyzer Analzer; 
+
         void AppStartup(object sender, StartupEventArgs e)
         {
             Console.WriteLine("Application Startup Running");
@@ -17,8 +19,7 @@ namespace BitRegAnalyzer
             DatabaseManager.InitializeSchema();
 
             MainWindow main_window = new MainWindow(this);
-            main_window.Show();           
-            RegistryAnalyzer.Main_Window = main_window;
+            main_window.Show();                       
         }
     }
 }

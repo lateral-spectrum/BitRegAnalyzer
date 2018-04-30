@@ -20,11 +20,11 @@ namespace BitRegAnalyzer
 {
     public partial class MainWindow : Window
     {        
-        public App MainApp; 
+        public App MainApp;        
 
         public MainWindow(App main)
         {
-            MainApp = main;
+            MainApp = main;            
             InitializeComponent();     
             
             if (AdminPermissionChecker.IsAdministrator())
@@ -42,8 +42,7 @@ namespace BitRegAnalyzer
             SetUIMode(false);
             string term = TermTextBox.Text;            
 
-            Console.WriteLine("Collecting registry data");            
-            MainProgressBar.Value = 50;
+            Console.WriteLine("Collecting registry data");                        
 
             List<RegistryKey> keys_to_search = new List<RegistryKey>();
             if (Convert.ToBoolean(CheckBoxCurrentUser.IsChecked))
@@ -55,25 +54,19 @@ namespace BitRegAnalyzer
                 keys_to_search.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE"));
             }
 
-            Thread analysis_thread = new Thread(() => RegistryAnalyzer.CollectRegistryData(keys_to_search));
-            analysis_thread.Start();
+            //RegistryDataCollector.CollectionCancelled = false;
+            CancelAnalysisButton.IsEnabled = true;
+            CancelAnalysisButton.Visibility = Visibility.Visible;
 
-            while (analysis_thread.IsAlive)
-            {
-                Thread.Sleep(100);
-            }
+            MainApp.Analzer = new RegistryAnalyzer(this);
+            Thread collection_thread = new Thread(new ThreadStart(() => {
+                MainApp.Analzer.CollectRegistryData(keys_to_search);
+            }));
 
-            SetUIMode(true);
-        }
-
-        private void DoProgressBar()
-        {
-            //while (MainProgressBar.Value < 100)
-            //{
-            //    MainProgressBar.Value += 3;
-            //    Thread.Sleep(750);
-            //}            
-        }
+            collection_thread.Start();
+            
+            //SetUIMode(true);
+        }       
 
         public void SetUIMode(bool target_enabled)
         {
@@ -81,6 +74,20 @@ namespace BitRegAnalyzer
             CheckBoxCurrentUser.IsEnabled = target_enabled;
             CheckBoxLocalMachine.IsEnabled = target_enabled;
             TermTextBox.IsEnabled = target_enabled;
+        }
+
+        //public delegate void SetProgressBarValueCallback(int value);
+
+        private void OutputHtmlButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelAnalysisButton_Click(object sender, RoutedEventArgs e)
+        {            
+            RegistryDataCollector.CollectionCancelled = true;
+            CancelAnalysisButton.IsEnabled = false;
+            CancelAnalysisButton.Visibility = Visibility.Hidden;
         }
     }
 }
