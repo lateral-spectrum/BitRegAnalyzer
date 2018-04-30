@@ -19,7 +19,7 @@
         <ProgressBar x:Name="AnalysisProgressBar" Minimum="0" Value="0" Maximum="1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="500" Margin="31,195,0,0"/>
         <Label Content="Searching Location:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,228,0,0" Width="116" FontWeight="Bold"/>
         <TextBlock x:Name="ActiveRegistryLocationText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="152,233,0,0" Width="379" Height="80" MaxHeight="80"/>
-        <Button x:Name="CancelAnalysisButton" Content="Cancel" HorizontalAlignment="Left" Margin="440,97,0,0" VerticalAlignment="Top" Width="92" Click="CancelAnalysisButton_Click" Height="23"/>
+        <Button x:Name="CancelAnalysisButton" Content="Cancel" HorizontalAlignment="Left" Margin="440,52,0,0" VerticalAlignment="Top" Width="92" Click="CancelAnalysisButton_Click" Height="23" Visibility="Hidden"/>
         <Label Content="Value:" HorizontalAlignment="Left" Margin="31,331,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.276,0.803"/>
         <TextBlock x:Name="ActiveValueText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="81,337,0,0" Width="446" RenderTransformOrigin="0.5,0.5" Height="126" MaxHeight="126">
             <TextBlock.RenderTransform>

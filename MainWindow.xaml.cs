@@ -38,20 +38,25 @@ namespace BitRegAnalyzer
         }      
 
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             SetUIMode(false);
             string term = TermTextBox.Text;            
 
-            Console.WriteLine("Collecting registry data");                        
+            Console.WriteLine("Collecting registry data");
+
+            var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+            var hkcu = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+
+            //var key = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
 
             List<RegistryKey> keys_to_search = new List<RegistryKey>();
             if (Convert.ToBoolean(CheckBoxCurrentUser.IsChecked))
             {
-                keys_to_search.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE"));
+                keys_to_search.Add(hkcu.OpenSubKey("SOFTWARE", false));
             }
             if (Convert.ToBoolean(CheckBoxLocalMachine.IsChecked))
             {
-                keys_to_search.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE"));
+                keys_to_search.Add(hklm.OpenSubKey("SOFTWARE", false));
             }
 
             //RegistryDataCollector.CollectionCancelled = false;

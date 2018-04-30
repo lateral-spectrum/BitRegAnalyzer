@@ -78,35 +78,24 @@ namespace BitRegAnalyzer
             set
             {
                 num_entries_recorded = value;
-                //main_window.NumEntriesText.Dispatcher.Invoke(() =>
-                //{
-                //    main_window.NumEntriesText.Text = value.ToString();
-                //});
-
-                //new Thread(new ThreadStart(() =>
-                //{
-                //    main_window.NumEntriesText.Dispatcher.Invoke(() =>
-                //    {
-                //        main_window.NumEntriesText.Text = value.ToString();
-                //    });
-                //})).Start();
+                main_window.NumEntriesText.Dispatcher.Invoke(() =>
+                {
+                    main_window.NumEntriesText.Text = value.ToString();
+                });
             }
         }
 
         public RegistryDataCollector[] CollectRegistryData(List<RegistryKey> keys_to_search)
-        {                       
+        {
             RegistryDataCollector[] data_collectors = new RegistryDataCollector[keys_to_search.Count];
-            for (int i = 0; i < data_collectors.Length; i++)
+            for (int i = 0; i < keys_to_search.Count; i++)
             {
-                data_collectors[i] = new RegistryDataCollector(keys_to_search[i], this);
+                data_collectors[i] = new RegistryDataCollector(keys_to_search[i], this);        
+            }
 
-                //new Thread(new ThreadStart(() =>
-                //{
-                //    data_collectors[i].Run();
-                //})).Start();
-
-                data_collectors[i].Run();
-                
+            foreach (RegistryDataCollector collector in data_collectors)
+            {
+                collector.Run();
             }
             
             return data_collectors;
