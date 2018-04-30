@@ -10,10 +10,10 @@
     <Grid Margin="0,0,0.444,0.111">
         <Button x:Name="RunAnalysisButton" Content="Run Search" HorizontalAlignment="Left" Margin="440,52,0,0" VerticalAlignment="Top" Width="92" Height="23" Padding="1" Click="RunAnalysisButton_Click"/>
         <TextBox x:Name="TermTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="390" Margin="32,52,0,0" Padding="5,1,0,2"/>
-        <Label Content="Search Value:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,21,0,0" Width="264" Padding="0,5,5,5"/>
-        <CheckBox x:Name="CheckBoxLocalMachine" Content="HKEY_CURRENT_MACHINE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,130,0,0" IsChecked="True"/>
-        <CheckBox x:Name="CheckBoxCurrentUser" Content="HKEY_CURRENT_USER" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,130,0,0" Width="138" IsChecked="True"/>
-        <Label Content="Check 'Software' Key in:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,91,0,0" Width="156" Padding="0,5,5,5"/>
+        <Label Content="Search Value:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,21,0,0" Width="264" Padding="0,5,5,5" FontWeight="Bold"/>
+        <CheckBox x:Name="CheckboxLocalMachine" Content="HKEY__CURRENT__MACHINE\Software" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,111,0,0" Width="228"/>
+        <CheckBox x:Name="CheckboxCurrentUser" Content="HKEY__CURRENT__USER\Software" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="294,111,0,0" Width="198"/>
+        <Label Content="Search Locations:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,80,0,0" Width="156" Padding="0,5,5,5" FontWeight="Bold"/>
         <Label x:Name="AdminPermissionWarningLabel" Content="Application not running as Adminstrator. Some keys will be unavailable. " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,585,0,0" Width="482" Foreground="Red"/>
         <Button x:Name="OutputHtmlButton" Content="Create HTML Output" HorizontalAlignment="Left" Margin="200,549,0,0" VerticalAlignment="Top" Width="179" Click="OutputHtmlButton_Click"/>
         <ProgressBar x:Name="AnalysisProgressBar" Minimum="0" Value="0" Maximum="1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="500" Margin="31,195,0,0"/>
@@ -30,10 +30,11 @@
                 </TransformGroup>
             </TextBlock.RenderTransform>
         </TextBlock>
-        <Label Content="# Entries:" HorizontalAlignment="Left" Margin="27,472,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label Content="# Matches:" HorizontalAlignment="Left" Margin="27,503,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="NumEntriesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="110,476,0,0" Width="434"/>
-        <TextBlock x:Name="NumMatchesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="110,508,0,0" Width="434"/>
+        <Label Content="Recorded Entries:" HorizontalAlignment="Left" Margin="27,472,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Matches:" HorizontalAlignment="Left" Margin="27,503,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="NumEntriesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="140,477,0,0" Width="268"/>
+        <TextBlock x:Name="NumMatchesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="93,508,0,0" Width="434"/>
+        <CheckBox x:Name="CheckboxRecentApps" Content="Recent Apps" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,145,0,0"/>
 
 
     </Grid>

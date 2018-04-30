@@ -12,6 +12,7 @@ namespace BitRegAnalyzer
         {
             // do insert for all records
             //DatabaseManager.Connection
+            string insert_cmd = "INSERT INTO";
         }
 
         public static void LogEntry(RegistryEntry entry)

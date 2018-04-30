@@ -26,10 +26,11 @@ namespace BitRegAnalyzer
             }
             set
             {
-                active_registry_location = value;            
-                //main_window.ActiveRegistryLocationText.Dispatcher.Invoke(() => {
-                //    main_window.ActiveRegistryLocationText.Text = value;
-                //});
+                active_registry_location = value;
+                main_window.ActiveRegistryLocationText.Dispatcher.Invoke(() =>
+                {
+                    main_window.ActiveRegistryLocationText.Text = value;
+                });
             }
         }
 
@@ -43,9 +44,10 @@ namespace BitRegAnalyzer
             set
             {
                 active_registry_value = value;
-                //main_window.ActiveValueText.Dispatcher.Invoke(() => {
-                //    main_window.ActiveValueText.Text = value;
-                //});
+                main_window.ActiveValueText.Dispatcher.Invoke(() =>
+                {
+                    main_window.ActiveValueText.Text = value;
+                });
             }
         }
         
@@ -81,7 +83,7 @@ namespace BitRegAnalyzer
                 main_window.NumEntriesText.Dispatcher.Invoke(() =>
                 {
                     main_window.NumEntriesText.Text = value.ToString();
-                });
+                });               
             }
         }
 

@@ -31,9 +31,7 @@ namespace BitRegAnalyzer
         }          
 
         public void Run()
-        {            
-            int num_sub_keys = TopLevelKey.GetSubKeyNames().Length;
-            analyzer.NumEntriesRecorded += num_sub_keys;
+        {                        
             RecursivelyCollectKeyLevelData(TopLevelKey);
         }
 
@@ -56,6 +54,7 @@ namespace BitRegAnalyzer
                 entry.Value = val;
                 entry.RegistryLocation = key.ToString();
                 RegistryEntries.Add(entry);
+                analyzer.NumEntriesRecorded += 1;
 
                 analyzer.ActiveRegistryLocation = entry.RegistryLocation;
                 analyzer.ActiveRegistryValue = val;                                                
