@@ -58,6 +58,8 @@ namespace BitRegAnalyzer
 
                 analyzer.ActiveRegistryLocation = entry.RegistryLocation;
                 analyzer.ActiveRegistryValue = val;                                                
+
+                
             }                        
             
             foreach (string sub_k in sub_key_names)
@@ -78,6 +80,8 @@ namespace BitRegAnalyzer
                     InaccessibleEntries.Add(no_access_location);
                 }                                
             }           
-        }        
+        }
+        
+        
     }
 }

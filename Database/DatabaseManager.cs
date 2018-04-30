@@ -43,7 +43,7 @@ namespace BitRegAnalyzer
             command.ExecuteNonQuery();
 
             string entry_table_create = @"CREATE TABLE IF NOT EXISTS ENTRIES (
-                    ENT_ID INT(11),
+                    ENT_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
                     RUN_ID INT(11),
                     KEY_NAME VARCHAR(1024),
                     VALUE VARCHAR(2048),

@@ -82,6 +82,7 @@
     <Compile Include="RegAnalysis\RegistryDataCollector.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Utils\AdminPermissionChecker.cs" />
+    <Compile Include="Utils\DBStringFormatter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

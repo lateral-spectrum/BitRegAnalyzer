@@ -39,8 +39,8 @@ namespace BitRegAnalyzer
 
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
-            SetUIMode(false);
-            string term = TermTextBox.Text;
+            SetUIMode(false);            
+            //MainApp.Analyzer.SearchTerm1 = TermTextBox.Text;
 
             Console.WriteLine("Collecting registry data");
 
@@ -78,9 +78,7 @@ namespace BitRegAnalyzer
                 EntryLogger.LogEntries(recorded_entries);
             }));
 
-            collection_thread.Start();
-
-            //SetUIMode(true); // needs to be in callback
+            collection_thread.Start();            
         }
 
         public void SetUIMode(bool target_enabled)
@@ -103,7 +101,14 @@ namespace BitRegAnalyzer
             CheckboxCurrentUser.IsEnabled = target_enabled;
             CheckboxLocalMachine.IsEnabled = target_enabled;
 
-            TermTextBox.IsEnabled = target_enabled;
+            SearchTerm1TextBox.IsEnabled = target_enabled;
+            SearchTerm2TextBox.IsEnabled = target_enabled;
+            SearchTerm3TextBox.IsEnabled = target_enabled;
+        }
+
+        public void OnDataCollectionIsFinished()
+        {
+            SetUIMode(true);
         }
 
         private void OutputHtmlButton_Click(object sender, RoutedEventArgs e)
@@ -116,6 +121,6 @@ namespace BitRegAnalyzer
             RegistryDataCollector.CollectionCancelled = true;
             CancelAnalysisButton.IsEnabled = false;
             CancelAnalysisButton.Visibility = Visibility.Hidden;
-        }
+        }       
     }
 }

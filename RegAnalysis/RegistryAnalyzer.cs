@@ -10,11 +10,13 @@ namespace BitRegAnalyzer
 {
     public class RegistryAnalyzer
     {
-        private MainWindow main_window; 
+        private MainWindow main_window;
+        public List<String> SearchTerms;
 
         public RegistryAnalyzer(MainWindow main_win)
         {
-            main_window = main_win; 
+            main_window = main_win;
+            SearchTerms = new List<String>();
         }
 
         private string active_registry_location;
@@ -102,6 +104,7 @@ namespace BitRegAnalyzer
             
             return data_collectors;
         }
+
 
         //public static List<RegistryLevelData> RegistryDataSearch(string term)
         //{
