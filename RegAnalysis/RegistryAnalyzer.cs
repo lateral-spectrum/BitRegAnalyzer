@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.Win32;
 
 namespace BitRegAnalyzer
@@ -26,10 +27,9 @@ namespace BitRegAnalyzer
             set
             {
                 active_registry_location = value;            
-
-                main_window.ActiveRegistryLocationText.Dispatcher.Invoke(() => {
-                    main_window.ActiveRegistryLocationText.Text = value;
-                });
+                //main_window.ActiveRegistryLocationText.Dispatcher.Invoke(() => {
+                //    main_window.ActiveRegistryLocationText.Text = value;
+                //});
             }
         }
 
@@ -42,8 +42,10 @@ namespace BitRegAnalyzer
             }
             set
             {
-                active_registry_value = value;        
-                // do ui update
+                active_registry_value = value;
+                //main_window.ActiveValueText.Dispatcher.Invoke(() => {
+                //    main_window.ActiveValueText.Text = value;
+                //});
             }
         }
         
@@ -58,24 +60,36 @@ namespace BitRegAnalyzer
             }
             set
             {
-                num_top_level_keys_analyzed = value;              
-                main_window.AnalysisProgressBar.Dispatcher.Invoke(() => {
-                    main_window.AnalysisProgressBar.Value = NumTopLevelKeysAnalyzed / NumTopLevelKeysAnalyzed;
-                });
+                num_top_level_keys_analyzed = value;
+                //main_window.AnalysisProgressBar.Dispatcher.Invoke(() =>
+                //{
+                //    main_window.AnalysisProgressBar.Value = NumTopLevelKeysAnalyzed / NumTopLevelKeysAnalyzed;
+                //});
             }
         }
 
-        private int num_keys_recorded;
-        public int NumKeysRecorded
+        private int num_entries_recorded;
+        public int NumEntriesRecorded
         {
             get
             {
-                return num_keys_recorded;
+                return num_entries_recorded;
             }
             set
             {
-                num_keys_recorded = value;
-                // update ui
+                num_entries_recorded = value;
+                //main_window.NumEntriesText.Dispatcher.Invoke(() =>
+                //{
+                //    main_window.NumEntriesText.Text = value.ToString();
+                //});
+
+                //new Thread(new ThreadStart(() =>
+                //{
+                //    main_window.NumEntriesText.Dispatcher.Invoke(() =>
+                //    {
+                //        main_window.NumEntriesText.Text = value.ToString();
+                //    });
+                //})).Start();
             }
         }
 
@@ -84,8 +98,15 @@ namespace BitRegAnalyzer
             RegistryDataCollector[] data_collectors = new RegistryDataCollector[keys_to_search.Count];
             for (int i = 0; i < data_collectors.Length; i++)
             {
-                data_collectors[i] = new RegistryDataCollector(keys_to_search[i], this);                    
-                data_collectors[i].Run();                
+                data_collectors[i] = new RegistryDataCollector(keys_to_search[i], this);
+
+                //new Thread(new ThreadStart(() =>
+                //{
+                //    data_collectors[i].Run();
+                //})).Start();
+
+                data_collectors[i].Run();
+                
             }
             
             return data_collectors;

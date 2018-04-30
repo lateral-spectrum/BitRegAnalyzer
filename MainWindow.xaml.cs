@@ -64,19 +64,32 @@ namespace BitRegAnalyzer
             }));
 
             collection_thread.Start();
-            
-            //SetUIMode(true);
+
+            //SetUIMode(true); // needs to be in callback
         }       
 
         public void SetUIMode(bool target_enabled)
-        {
-            RunAnalysisButton.IsEnabled = target_enabled;
+        {            
+            if (target_enabled)
+            {
+                RunAnalysisButton.Visibility = Visibility.Hidden;
+                RunAnalysisButton.IsEnabled = false; 
+                CancelAnalysisButton.Visibility = Visibility.Visible;
+                CancelAnalysisButton.IsEnabled = true; 
+            }
+            else
+            {
+                RunAnalysisButton.Visibility = Visibility.Visible;
+                RunAnalysisButton.IsEnabled = true;
+                CancelAnalysisButton.Visibility = Visibility.Hidden;
+                CancelAnalysisButton.IsEnabled = false; 
+            }
+
             CheckBoxCurrentUser.IsEnabled = target_enabled;
             CheckBoxLocalMachine.IsEnabled = target_enabled;
-            TermTextBox.IsEnabled = target_enabled;
-        }
 
-        //public delegate void SetProgressBarValueCallback(int value);
+            TermTextBox.IsEnabled = target_enabled;          
+        }        
 
         private void OutputHtmlButton_Click(object sender, RoutedEventArgs e)
         {

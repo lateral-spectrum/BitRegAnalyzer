@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BitRegAnalyzer"
         mc:Ignorable="d"
         Title="BitRegAnalyzer" 
-        MaxHeight="500" MinHeight="500" Height="500" Width="574.444" MaxWidth="574.444" MinWidth="574.444">
+        MaxHeight="500" MinHeight="650" Height="650" Width="574.444" MaxWidth="574.444" MinWidth="574.444">
     <Grid Margin="0,0,0.444,0.111">
         <Button x:Name="RunAnalysisButton" Content="Run Search" HorizontalAlignment="Left" Margin="440,52,0,0" VerticalAlignment="Top" Width="92" Height="23" Padding="1" Click="RunAnalysisButton_Click"/>
         <TextBox x:Name="TermTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="390" Margin="32,52,0,0" Padding="5,1,0,2"/>
@@ -14,12 +14,26 @@
         <CheckBox x:Name="CheckBoxLocalMachine" Content="HKEY_CURRENT_MACHINE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,130,0,0" IsChecked="True"/>
         <CheckBox x:Name="CheckBoxCurrentUser" Content="HKEY_CURRENT_USER" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,130,0,0" Width="138" IsChecked="True"/>
         <Label Content="Check 'Software' Key in:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,91,0,0" Width="156" Padding="0,5,5,5"/>
-        <Label x:Name="AdminPermissionWarningLabel" Content="Application not running as Adminstrator. Some keys will be unavailable. " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,429,0,0" Width="482" Foreground="Red"/>
-        <Button x:Name="OutputHtmlButton" Content="Create HTML Output" HorizontalAlignment="Left" Margin="216,409,0,0" VerticalAlignment="Top" Width="179" Click="OutputHtmlButton_Click"/>
-        <ProgressBar x:Name="AnalysisProgressBar" Minimum="0" Value="0" Maximum="1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="500" Margin="32,171,0,0"/>
-        <Label Content="Searching Location:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,192,0,0" Width="116"/>
-        <TextBlock x:Name="ActiveRegistryLocationText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="153,197,0,0" Width="379"/>
-        <Button x:Name="CancelAnalysisButton" Content="Button" HorizontalAlignment="Left" Margin="244,332,0,0" VerticalAlignment="Top" Width="75" Click="CancelAnalysisButton_Click" Visibility="Hidden"/>
+        <Label x:Name="AdminPermissionWarningLabel" Content="Application not running as Adminstrator. Some keys will be unavailable. " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,585,0,0" Width="482" Foreground="Red"/>
+        <Button x:Name="OutputHtmlButton" Content="Create HTML Output" HorizontalAlignment="Left" Margin="200,549,0,0" VerticalAlignment="Top" Width="179" Click="OutputHtmlButton_Click"/>
+        <ProgressBar x:Name="AnalysisProgressBar" Minimum="0" Value="0" Maximum="1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="500" Margin="31,195,0,0"/>
+        <Label Content="Searching Location:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,228,0,0" Width="116" FontWeight="Bold"/>
+        <TextBlock x:Name="ActiveRegistryLocationText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="152,233,0,0" Width="379" Height="80" MaxHeight="80"/>
+        <Button x:Name="CancelAnalysisButton" Content="Cancel" HorizontalAlignment="Left" Margin="440,97,0,0" VerticalAlignment="Top" Width="92" Click="CancelAnalysisButton_Click" Height="23"/>
+        <Label Content="Value:" HorizontalAlignment="Left" Margin="31,331,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.276,0.803"/>
+        <TextBlock x:Name="ActiveValueText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="81,337,0,0" Width="446" RenderTransformOrigin="0.5,0.5" Height="126" MaxHeight="126">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Label Content="# Entries:" HorizontalAlignment="Left" Margin="27,472,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="# Matches:" HorizontalAlignment="Left" Margin="27,503,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="NumEntriesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="110,476,0,0" Width="434"/>
+        <TextBlock x:Name="NumMatchesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="110,508,0,0" Width="434"/>
 
 
     </Grid>

@@ -33,7 +33,7 @@ namespace BitRegAnalyzer
         public void Run()
         {            
             int num_sub_keys = TopLevelKey.GetSubKeyNames().Length;
-            analyzer.NumKeysRecorded += num_sub_keys;
+            analyzer.NumEntriesRecorded += num_sub_keys;
             RecursivelyCollectKeyLevelData(TopLevelKey);
         }
 

@@ -10,7 +10,7 @@ namespace BitRegAnalyzer
 {
     public static class DatabaseManager
     {
-        public static SQLiteConnection DatabaseConnection;
+        public static SQLiteConnection Connection;
 
         public static void InitializeSchema()
         {
@@ -18,14 +18,14 @@ namespace BitRegAnalyzer
             
             try
             {
-                DatabaseConnection = new SQLiteConnection(string.Format(@"Data Source={0};Version=3;", db_file_name));
-                DatabaseConnection.Open();
+                Connection = new SQLiteConnection(string.Format(@"Data Source={0};Version=3;", db_file_name));
+                Connection.Open();
             }
             catch (Exception ex)
             {
                 SQLiteConnection.CreateFile("data.sqlite");
-                DatabaseConnection = new SQLiteConnection(string.Format(@"Data Source={0};Version=3;", db_file_name));
-                DatabaseConnection.Open();
+                Connection = new SQLiteConnection(string.Format(@"Data Source={0};Version=3;", db_file_name));
+                Connection.Open();
             }           
 
             string analyses_table_create_query = @"CREATE TABLE IF NOT EXISTS ANALYSES (
@@ -35,14 +35,10 @@ namespace BitRegAnalyzer
                 );";
 
             Console.WriteLine("Creating analyses table.");
-            SQLiteCommand command = new SQLiteCommand(analyses_table_create_query, DatabaseConnection);
+            SQLiteCommand command = new SQLiteCommand(analyses_table_create_query, Connection);
             command.ExecuteNonQuery();
 
-            //SQLiteDataReader rdr = command.ExecuteReader();
-
-            
-
-
+            //SQLiteDataReader rdr = command.ExecuteReader();            
         }
     }
 }
