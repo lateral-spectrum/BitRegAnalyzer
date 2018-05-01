@@ -36,13 +36,7 @@ namespace BitRegAnalyzer
         }
 
         private void RecursivelyCollectKeyLevelData(RegistryKey key)
-        {                
-            if (CollectionCancelled)
-            {
-                Console.WriteLine("Collection has been aborted.");
-                return; 
-            }
-
+        {                          
             string[] sub_key_names = key.GetSubKeyNames();
             string[] value_names = key.GetValueNames();                        
 
@@ -65,12 +59,7 @@ namespace BitRegAnalyzer
             foreach (string sub_k in sub_key_names)
             {
                 try
-                {
-                    if (CollectionCancelled)
-                    {
-                        Console.WriteLine("Collection has been aborted.");
-                        return;
-                    }
+                {                    
                     RegistryKey sk = key.OpenSubKey(sub_k, false);                   
                     RecursivelyCollectKeyLevelData(sk);
                 }

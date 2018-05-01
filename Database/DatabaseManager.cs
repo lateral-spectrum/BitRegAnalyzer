@@ -32,7 +32,7 @@ namespace BitRegAnalyzer
 
             string analyses_table_create = @"CREATE TABLE IF NOT EXISTS ANALYSES (
                     RUN_ID INT(11) PRIMARY KEY,
-                    INCLUDES_LOCAL_MACHINE_SOFTWARE TINY_INT NOT NULL,
+                    INCLUDES_LOCAL_MACHINE_SOFTWARE TINYINT NOT NULL,
                     INCLUDES_CURRENT_USER_SOFTWARE TINYINT NOT NULL,
                     INCLUDES_RECENT_APPS TINYINT NOT NULL
                 );";
@@ -43,7 +43,7 @@ namespace BitRegAnalyzer
             command.ExecuteNonQuery();
 
             string entry_table_create = @"CREATE TABLE IF NOT EXISTS ENTRIES (
-                    ENT_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                    ENT_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     RUN_ID INT(11),
                     KEY_NAME VARCHAR(1024),
                     VALUE VARCHAR(2048),

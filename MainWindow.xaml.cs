@@ -39,28 +39,65 @@ namespace BitRegAnalyzer
 
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
-            SetUIMode(false);            
+            SetUIMode(false);
             //MainApp.Analyzer.SearchTerm1 = TermTextBox.Text;
+            MainApp.Analyzer = new RegistryAnalyzer(this);
 
             Console.WriteLine("Collecting registry data");
 
             List<RegistryKey> keys_to_search = new List<RegistryKey>();
             if (Convert.ToBoolean(CheckboxCurrentUser.IsChecked))
             {
-                keys_to_search.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE", false));
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey("SOFTWARE", false);
+                if (opened_key != null)
+                {
+                    keys_to_search.Add(opened_key);
+                }
             }
             if (Convert.ToBoolean(CheckboxLocalMachine.IsChecked))
             {
-                keys_to_search.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE", false));
+                RegistryKey opened_key = Registry.LocalMachine.OpenSubKey("SOFTWARE", false);
+                if (opened_key != null)
+                {
+                    keys_to_search.Add(opened_key);
+                }                
             }
             if (Convert.ToBoolean(CheckboxRecentApps.IsChecked))
-            {
-                keys_to_search.Add(Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Search\RecentApps"));
+            {                
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Search\RecentApps");
+                if (opened_key != null)
+                {
+                    keys_to_search.Add(opened_key);
+                }
+                else
+                {
+                    Console.WriteLine("Recent apps is null.");
+                }
             }
-
-            //RegistryDataCollector.CollectionCancelled = false;
-            CancelAnalysisButton.IsEnabled = true;
-            CancelAnalysisButton.Visibility = Visibility.Visible;
+            if (Convert.ToBoolean(CheckboxRecentAppsDocs.IsChecked))
+            {
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSave");
+                if (opened_key != null)
+                {
+                    keys_to_search.Add(opened_key);
+                }
+                else
+                {
+                    Console.WriteLine("Recent apps docs is null.");
+                }
+            }
+            if (Convert.ToBoolean(CheckboxRecentTorrents.IsChecked))
+            {
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.torrent");
+                if (opened_key != null)
+                {
+                    keys_to_search.Add(opened_key);
+                }
+                else
+                {
+                    Console.WriteLine("Recent Torrents is null.");
+                }
+            }
 
             MainApp.Analyzer = new RegistryAnalyzer(this);
             Thread collection_thread = new Thread(new ThreadStart(() =>
@@ -76,26 +113,24 @@ namespace BitRegAnalyzer
                 }
 
                 EntryLogger.LogEntries(recorded_entries);
+
+                OnDataCollectionIsFinished();
             }));
 
-            collection_thread.Start();            
+            collection_thread.Start();
         }
 
         public void SetUIMode(bool target_enabled)
         {
             if (target_enabled)
             {
-                RunAnalysisButton.Visibility = Visibility.Hidden;
                 RunAnalysisButton.IsEnabled = false;
-                CancelAnalysisButton.Visibility = Visibility.Visible;
-                CancelAnalysisButton.IsEnabled = true;
+                AnalysisProgressBar.IsIndeterminate = true;
             }
             else
             {
-                RunAnalysisButton.Visibility = Visibility.Visible;
                 RunAnalysisButton.IsEnabled = true;
-                CancelAnalysisButton.Visibility = Visibility.Hidden;
-                CancelAnalysisButton.IsEnabled = false;
+                AnalysisProgressBar.IsIndeterminate = false;
             }
 
             CheckboxCurrentUser.IsEnabled = target_enabled;
@@ -115,12 +150,5 @@ namespace BitRegAnalyzer
         {
 
         }
-
-        private void CancelAnalysisButton_Click(object sender, RoutedEventArgs e)
-        {
-            RegistryDataCollector.CollectionCancelled = true;
-            CancelAnalysisButton.IsEnabled = false;
-            CancelAnalysisButton.Visibility = Visibility.Hidden;
-        }       
     }
 }
