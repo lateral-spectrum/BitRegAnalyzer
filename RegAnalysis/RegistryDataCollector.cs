@@ -51,9 +51,18 @@ namespace BitRegAnalyzer
                 analyzer.NumEntriesRecorded += 1;
 
                 analyzer.ActiveRegistryLocation = entry.RegistryLocation;
-                analyzer.ActiveRegistryValue = val;                                                
+                analyzer.ActiveRegistryValue = val;
 
-                
+                List<string> matching_fields = analyzer.CheckValueMatch(val);
+                if (matching_fields.Count != 0)
+                {
+                    List<RegistryEntry> matching_entries = new List<RegistryEntry>();
+                    foreach (string mv in matching_fields)
+                    {
+                        
+                    }
+                    //EntryLogger.LogMatchingEntries(matching_entries);
+                }                              
             }                        
             
             foreach (string sub_k in sub_key_names)

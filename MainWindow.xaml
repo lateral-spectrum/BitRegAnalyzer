@@ -18,9 +18,9 @@
         <Button x:Name="OutputHtmlButton" Content="Create HTML Output" HorizontalAlignment="Left" Margin="200,549,0,0" VerticalAlignment="Top" Width="179" Click="OutputHtmlButton_Click"/>
         <ProgressBar x:Name="AnalysisProgressBar" IsIndeterminate="False" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="500" Margin="34,247,0,0"/>
         <Label Content="Searching Location:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,279,0,0" Width="116" FontWeight="Bold"/>
-        <TextBlock x:Name="ActiveRegistryLocationText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="142,284,0,0" Width="379" Height="80" MaxHeight="80"/>
-        <Label Content="Value:" HorizontalAlignment="Left" Margin="21,382,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.276,0.803"/>
-        <TextBlock x:Name="ActiveValueText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="71,388,0,0" Width="446" RenderTransformOrigin="0.5,0.5" Height="79" MaxHeight="79">
+        <TextBlock x:Name="ActiveRegistryLocationText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="142,284,0,0" Width="379" Height="80" MaxHeight="80"/>
+        <Label Content="Value:" HorizontalAlignment="Left" Margin="25,382,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.276,0.803"/>
+        <TextBlock x:Name="ActiveValueText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Margin="75,388,0,0" Width="446" RenderTransformOrigin="0.5,0.5" Height="79" MaxHeight="79">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -31,8 +31,8 @@
         </TextBlock>
         <Label Content="Recorded Entries:" HorizontalAlignment="Left" Margin="27,472,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label Content="Matches:" HorizontalAlignment="Left" Margin="27,503,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="NumEntriesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="140,477,0,0" Width="268"/>
-        <TextBlock x:Name="NumMatchesText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="93,508,0,0" Width="434"/>
+        <TextBlock x:Name="NumEntriesText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="140,477,0,0" Width="268"/>
+        <TextBlock x:Name="NumMatchesText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="93,508,0,0" Width="434"/>
         <TextBox x:Name="SearchTerm2TextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="6f7272656e74" VerticalAlignment="Top" Width="390" Margin="45,80,0,0" Padding="5,1,0,2"/>
         <TextBox x:Name="SearchTerm3TextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="006f007200720065006e0074" VerticalAlignment="Top" Width="390" Margin="45,109,0,0" Padding="5,1,0,2"/>
         <Label Content="1." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,52,0,0" Width="25" Height="23" RenderTransformOrigin="0.924,-0.425" Padding="6.5,5,5,5"/>

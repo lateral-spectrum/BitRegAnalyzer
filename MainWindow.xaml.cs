@@ -40,8 +40,11 @@ namespace BitRegAnalyzer
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
             SetUIMode(false);
-            //MainApp.Analyzer.SearchTerm1 = TermTextBox.Text;
             MainApp.Analyzer = new RegistryAnalyzer(this);
+            MainApp.Analyzer.SearchTerms = new List<string>()
+            { SearchTerm1TextBox.Text, SearchTerm2TextBox.Text, SearchTerm3TextBox.Text };
+
+            AnalysisRunLogger.LogNewRun();            
 
             Console.WriteLine("Collecting registry data");
 
@@ -121,28 +124,30 @@ namespace BitRegAnalyzer
         }
 
         public void SetUIMode(bool target_enabled)
-        {
-            if (target_enabled)
-            {
-                RunAnalysisButton.IsEnabled = false;
-                AnalysisProgressBar.IsIndeterminate = true;
-            }
-            else
-            {
-                RunAnalysisButton.IsEnabled = true;
-                AnalysisProgressBar.IsIndeterminate = false;
-            }
+        {          
+            Dispatcher.Invoke(() => {
+                if (target_enabled)
+                {
+                    RunAnalysisButton.IsEnabled = true;
+                    AnalysisProgressBar.IsIndeterminate = false;
+                }
+                else
+                {
+                    RunAnalysisButton.IsEnabled = false;
+                    AnalysisProgressBar.IsIndeterminate = true;
+                }
 
-            CheckboxCurrentUser.IsEnabled = target_enabled;
-            CheckboxLocalMachine.IsEnabled = target_enabled;
+                CheckboxCurrentUser.IsEnabled = target_enabled;
+                CheckboxLocalMachine.IsEnabled = target_enabled;
 
-            SearchTerm1TextBox.IsEnabled = target_enabled;
-            SearchTerm2TextBox.IsEnabled = target_enabled;
-            SearchTerm3TextBox.IsEnabled = target_enabled;
+                SearchTerm1TextBox.IsEnabled = target_enabled;
+                SearchTerm2TextBox.IsEnabled = target_enabled;
+                SearchTerm3TextBox.IsEnabled = target_enabled;
+            });           
         }
 
         public void OnDataCollectionIsFinished()
-        {
+        {            
             SetUIMode(true);
         }
 

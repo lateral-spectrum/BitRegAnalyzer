@@ -75,10 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\AnalysisRunLogger.cs" />
     <Compile Include="Database\EntryLogger.cs" />
     <Compile Include="RegAnalysis\RegistryAnalyzer.cs" />
     <Compile Include="RegAnalysis\RegistryEntry.cs" />
-    <Compile Include="RegAnalysis\RegistryKeyReadResult.cs" />
     <Compile Include="RegAnalysis\RegistryDataCollector.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Utils\AdminPermissionChecker.cs" />

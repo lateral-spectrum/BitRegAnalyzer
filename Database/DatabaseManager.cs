@@ -31,10 +31,8 @@ namespace BitRegAnalyzer
             SQLiteCommand command;
 
             string analyses_table_create = @"CREATE TABLE IF NOT EXISTS ANALYSES (
-                    RUN_ID INT(11) PRIMARY KEY,
-                    INCLUDES_LOCAL_MACHINE_SOFTWARE TINYINT NOT NULL,
-                    INCLUDES_CURRENT_USER_SOFTWARE TINYINT NOT NULL,
-                    INCLUDES_RECENT_APPS TINYINT NOT NULL
+                    RUN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    DATE_RUN TIMESTAMP NULL
                 );";
 
             Console.WriteLine("Creating analyses table.");
@@ -53,6 +51,19 @@ namespace BitRegAnalyzer
             Console.WriteLine("Creating analyses table.");
 
             command = new SQLiteCommand(entry_table_create, Connection);
+            command.ExecuteNonQuery();
+            
+            string matching_entry_table_create = @"CREATE TABLE IF NOT EXISTS MATCHING_ENTRIES (
+                    ENT_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    RUN_ID INT(11),
+                    KEY_NAME VARCHAR(1024),
+                    VALUE VARCHAR(2048),
+                    LOCATION VARCHAR(512),
+                    MATCHING_FIELD VARCHAR(20)
+                );";
+
+            Console.WriteLine("Creating matching table.");
+            command = new SQLiteCommand(matching_entry_table_create, Connection);
             command.ExecuteNonQuery();
 
             //SQLiteDataReader rdr = command.ExecuteReader();            
