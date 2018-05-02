@@ -22,11 +22,14 @@ namespace BitRegAnalyzer
     {
         public App MainApp;
         public bool LogOnlyMatches;
+        public IntPtr ConsoleHandle;
 
         public MainWindow(App main)
         {
             MainApp = main;
             InitializeComponent();
+
+            ConsoleHandle = ConsoleManager.GetConsoleWindow();           
 
             if (AdminPermissionChecker.IsAdministrator())
             {
@@ -186,7 +189,9 @@ namespace BitRegAnalyzer
 
         private void OutputTxtButton_Click(object sender, RoutedEventArgs e)
         {
-            new ResultTxtOutput(MainApp.Analyzer);
+            //new ResultTxtOutput(MainApp.Analyzer);
+            //ConsoleManager.ShowWindow(ConsoleHandle, ConsoleManager.SW_SHOW);
+            //Console.WriteLine("Cicken");
         }
 
         private void OutputCSVButton_Click(object sender, RoutedEventArgs e)

@@ -38,6 +38,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>BitRegAnalyzer.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -86,6 +89,7 @@
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Utils\AdminPermissionChecker.cs" />
     <Compile Include="Utils\ByteStringConverter.cs" />
+    <Compile Include="Utils\ConsoleManager.cs" />
     <Compile Include="Utils\DBStringFormatter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
