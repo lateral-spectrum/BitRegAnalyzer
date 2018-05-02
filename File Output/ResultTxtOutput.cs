@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BitRegAnalyzers
+namespace BitRegAnalyzer
 {
-    class ResultTxtOutput
+    public class ResultTxtOutput
     {
-        
+        RegistryAnalyzer analyzer;
+        public ResultTxtOutput(RegistryAnalyzer lyzer)
+        {
+            analyzer = lyzer;
+        }
     }
 }

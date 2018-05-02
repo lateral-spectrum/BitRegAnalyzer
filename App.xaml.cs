@@ -10,7 +10,7 @@ namespace BitRegAnalyzer
 {   
     public partial class App : Application
     {
-        public RegistryAnalyzer Analyzer; 
+        public RegistryAnalyzer Analyzer;        
 
         void AppStartup(object sender, StartupEventArgs e)
         {

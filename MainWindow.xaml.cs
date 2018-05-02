@@ -21,6 +21,7 @@ namespace BitRegAnalyzer
     public partial class MainWindow : Window
     {
         public App MainApp;
+        public bool LogOnlyMatches;
 
         public MainWindow(App main)
         {
@@ -40,8 +41,13 @@ namespace BitRegAnalyzer
         private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
             SetUIMode(false);
+            LogScrollViewer.Visibility = Visibility.Hidden;
+            SetOutputButtonEnabledStatus(false);
+            LogOnlyMatches = Convert.ToBoolean(CheckboxLogOnlyMatches.IsChecked);
+
             MainApp.Analyzer = new RegistryAnalyzer(this);
             MainApp.Analyzer.SearchTerms = new List<string>() { SearchTerm1TextBox.Text, SearchTerm2TextBox.Text, SearchTerm3TextBox.Text };
+            EntryLogger.main_window = this;
 
             AnalysisRunLogger.LogNewRun();
             AnalysisRunLogger.UpdateCurrentRunID();
@@ -105,6 +111,8 @@ namespace BitRegAnalyzer
             Thread collection_thread = new Thread(new ThreadStart(() =>
             {
                 RegistryDataCollector[] collected_datas = MainApp.Analyzer.CollectRegistryData(keys_to_search);
+                MainApp.Analyzer.EntryCollectors = new List<RegistryDataCollector>(collected_datas);
+
                 List<RegistryEntry> recorded_entries = new List<RegistryEntry>();
                 foreach (RegistryDataCollector collector in collected_datas)
                 {
@@ -114,7 +122,17 @@ namespace BitRegAnalyzer
                     }
                 }
 
-                EntryLogger.LogEntries(recorded_entries);
+                new Thread(new ThreadStart(() =>
+                {                  
+                    if (!LogOnlyMatches)
+                    {
+                        SetUIMode(false);
+                        EntryLogger.LogEntries(recorded_entries);
+                        SetUIMode(true);
+                        SetOutputButtonEnabledStatus(false);
+                    }
+                })).Start();
+                
 
                 OnDataCollectionIsFinished();
             }));
@@ -148,11 +166,32 @@ namespace BitRegAnalyzer
         public void OnDataCollectionIsFinished()
         {            
             SetUIMode(true);
+            SetOutputButtonEnabledStatus(true);
+        }
+
+        public void SetOutputButtonEnabledStatus(bool enabled)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OutputHtmlButton.IsEnabled = enabled;
+                OutputCSVButton.IsEnabled = enabled;
+                OutputTxtButton.IsEnabled = enabled; 
+            });            
         }
 
         private void OutputHtmlButton_Click(object sender, RoutedEventArgs e)
         {
+            new ResultHtmlOutput(MainApp.Analyzer);
+        }       
 
+        private void OutputTxtButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ResultTxtOutput(MainApp.Analyzer);
+        }
+
+        private void OutputCSVButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ResultCSVOutput(MainApp.Analyzer);
         }
     }
 }

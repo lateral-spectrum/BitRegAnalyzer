@@ -12,11 +12,13 @@ namespace BitRegAnalyzer
     {
         private MainWindow main_window;
         public List<string> SearchTerms;
+        public List<RegistryDataCollector> EntryCollectors;
 
         public RegistryAnalyzer(MainWindow main_win)
         {
             main_window = main_win;
             SearchTerms = new List<string>();
+            EntryCollectors = new List<RegistryDataCollector>();
         }
 
         private string active_registry_location;

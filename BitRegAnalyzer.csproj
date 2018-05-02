@@ -87,6 +87,7 @@
     <Compile Include="Utils\AdminPermissionChecker.cs" />
     <Compile Include="Utils\ByteStringConverter.cs" />
     <Compile Include="Utils\DBStringFormatter.cs" />
+    <Compile Include="Utils\ScrollViewerExtensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

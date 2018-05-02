@@ -43,38 +43,27 @@ namespace BitRegAnalyzer
 
             foreach (string vn in value_names)
             {
-                string val = key.GetValue(vn).ToString();// deped
-                var value = key.GetValue(vn);
-                var type = key.GetValue(vn).GetType().ToString();
-                Console.WriteLine(type);
-
-                if (type == "System.Byte[]")
+                string string_value = key.GetValue(vn).ToString();// deped                
+                var value_kind = key.GetValueKind(vn);
+                Console.WriteLine(value_kind);
+                if (value_kind == RegistryValueKind.Binary)
                 {
-                    byte[] v = (byte[])value;
-                    //byte[] bytes = Encoding.ASCII.GetBytes("orrent");
-                    byte[] bytes = Encoding.UTF8.GetBytes("orrent");
-                    string hex_string = ByteStringConverter.HexStringFromByteArr(bytes);
-                    int test = 0; 
-                    //string byte_string = ByteStringConverter.ByteArrayToString(v);
-                    //string ByteStringConverter.Bytes
-
-                    ////int test = 0;
-
-                    //byte[] ByteStringConverter.StringToByteArray("006f007200720065006e0074");
-
+                    var value = (byte[])key.GetValue(vn);
+                    string_value = BitConverter.ToString(value);
+                    string_value = string_value.Replace("-", "");                    
                 }
-
+              
                 RegistryEntry entry = new RegistryEntry();
                 entry.KeyName = vn;
-                entry.Value = val;                
+                entry.Value = string_value;                
                 entry.RegistryLocation = key.ToString();
                 RegistryEntries.Add(entry);
                 analyzer.NumEntriesRecorded += 1;
 
                 analyzer.ActiveRegistryLocation = entry.RegistryLocation;
-                analyzer.ActiveRegistryValue = val;
+                analyzer.ActiveRegistryValue = string_value;
 
-                List<string> matching_fields = analyzer.CheckValueMatch(val);
+                List<string> matching_fields = analyzer.CheckValueMatch(string_value);
                 if (matching_fields.Count != 0)
                 {                    
                     foreach (string mtf in matching_fields)
