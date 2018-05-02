@@ -14,7 +14,8 @@ namespace BitRegAnalyzer
     public class RegistryDataCollector
     {
         public RegistryKey TopLevelKey;        
-        public List<RegistryEntry> RegistryEntries; 
+        public List<RegistryEntry> RegistryEntries;
+        public List<RegistryEntry> MatchingRegistryEntries; 
         public List<string> InaccessibleEntries;
 
         private MainWindow main_window;
@@ -27,6 +28,7 @@ namespace BitRegAnalyzer
             analyzer = lyzer; 
             TopLevelKey = top_level_key;
             RegistryEntries = new List<RegistryEntry>();
+            MatchingRegistryEntries = new List<RegistryEntry>();
             InaccessibleEntries = new List<string>();
             CollectionCancelled = false; 
         }          
@@ -69,6 +71,7 @@ namespace BitRegAnalyzer
                     foreach (string mtf in matching_fields)
                     {
                         EntryLogger.LogMatchingEntry(entry, mtf);
+                        MatchingRegistryEntries.Add(entry);
                     }                    
                 }
                 matching_fields = analyzer.CheckValueMatch(vn);
@@ -77,6 +80,7 @@ namespace BitRegAnalyzer
                     foreach (string mtf in matching_fields)
                     {
                         EntryLogger.LogMatchingEntry(entry, mtf);
+                        MatchingRegistryEntries.Add(entry);
                     }
                 }
                 matching_fields = analyzer.CheckValueMatch(entry.RegistryLocation);
@@ -85,6 +89,7 @@ namespace BitRegAnalyzer
                     foreach (string mtf in matching_fields)
                     {
                         EntryLogger.LogMatchingEntry(entry, mtf);
+                        MatchingRegistryEntries.Add(entry);
                     }
                 }
             }                        
