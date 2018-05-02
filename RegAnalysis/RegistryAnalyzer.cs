@@ -108,6 +108,8 @@ namespace BitRegAnalyzer
             List<string> matching_terms = new List<string>();
             foreach (string s_term in SearchTerms)
             {
+                int test = incoming_value.IndexOf(s_term);
+                int nothing = 0;
                 if (incoming_value.IndexOf(s_term) == -1)
                 {
                     continue;

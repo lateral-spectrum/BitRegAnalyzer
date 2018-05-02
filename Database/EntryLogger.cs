@@ -25,9 +25,12 @@ namespace BitRegAnalyzer
 
         }        
 
-        public static void LogMatchEntry(RegistryEntry entry, string matching_field)
+        public static void LogMatchingEntry(RegistryEntry entry, string matching_field)
         {
-            
+            SQLiteCommand command = DatabaseManager.Connection.CreateCommand();
+            command.CommandText = DBStringFormatter.GetMatchingEntryInsertStatement(entry, matching_field, AnalysisRunLogger.CurrentRunID);
+            command.ExecuteNonQuery();
+            Console.WriteLine("MATCH: " + command.CommandText);
         }
 
         //public static void LogMatchingEntries(List<RegistryEntry> matching_entries)

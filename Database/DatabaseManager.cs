@@ -45,7 +45,7 @@ namespace BitRegAnalyzer
                     RUN_ID INT(11),
                     KEY_NAME VARCHAR(1024),
                     VALUE VARCHAR(2048),
-                    LOCATION VARCHAR(512)
+                    LOCATION VARCHAR(2048)                    
                 );";
 
             Console.WriteLine("Creating analyses table.");
@@ -58,7 +58,7 @@ namespace BitRegAnalyzer
                     RUN_ID INT(11),
                     KEY_NAME VARCHAR(1024),
                     VALUE VARCHAR(2048),
-                    LOCATION VARCHAR(512),
+                    LOCATION VARCHAR(2048),
                     MATCHING_FIELD VARCHAR(20)
                 );";
 

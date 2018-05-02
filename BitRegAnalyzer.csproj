@@ -77,11 +77,15 @@
     </ApplicationDefinition>
     <Compile Include="Database\AnalysisRunLogger.cs" />
     <Compile Include="Database\EntryLogger.cs" />
+    <Compile Include="File Output\ResultCSVOutput.cs" />
+    <Compile Include="File Output\ResultHtmlOutput.cs" />
+    <Compile Include="File Output\ResultTxtOutput.cs" />
     <Compile Include="RegAnalysis\RegistryAnalyzer.cs" />
     <Compile Include="RegAnalysis\RegistryEntry.cs" />
     <Compile Include="RegAnalysis\RegistryDataCollector.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Utils\AdminPermissionChecker.cs" />
+    <Compile Include="Utils\ByteStringConverter.cs" />
     <Compile Include="Utils\DBStringFormatter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -124,9 +128,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="File Ouput\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

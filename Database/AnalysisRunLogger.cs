@@ -12,37 +12,45 @@ namespace BitRegAnalyzer
         public static int CurrentRunID;
 
         public static void LogNewRun()
-        {            
-            SQLiteCommand command = (SQLiteCommand)DatabaseManager.Connection.CreateCommand();
-            command.CommandText = "SELECT * FROM ANALYSES ORDER BY RUN_ID DESC";
-            SQLiteDataReader reader = command.ExecuteReader();
-            CurrentRunID = 0; // for initial only
+        {                                    
             try
             {
+                string time = new DateTime().ToShortDateString();
+                SQLiteCommand command = new SQLiteCommand(DatabaseManager.Connection);
+                command.CommandText = string.Format("INSERT INTO ANALYSES (DATE_RUN) VALUES (\"{0}\")", time);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                string badness = ex.ToString();
+                Console.WriteLine("Failed to log new analysis.");
+            }
+        }
+
+        public static void UpdateCurrentRunID()
+        {
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(DatabaseManager.Connection);
+                command.CommandText = "SELECT * FROM ANALYSES ORDER BY RUN_ID DESC";
+                SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    List<int> r_ids = new List<int>();
+                    List<int> run_ids = new List<int>();
                     while (reader.Read())
                     {
-                        int value = reader.GetInt32(0);
-                        Console.WriteLine(value);
-                        r_ids.Add(value);
+                        run_ids.Add(reader.GetInt32(0));
                     }
-                    CurrentRunID = r_ids[0]; 
+                    CurrentRunID = run_ids[0];
                 }
                 else
                 {
-                    command.CommandText = string.Format("INSERT INTO ANALYSES (RUN_ID) VALUES) {0};", CurrentRunID);
-                    command.ExecuteNonQuery();
-                    Console.WriteLine("Wrote Inital value to analyses.");
-                    
+                    CurrentRunID = 0; 
                 }
-                reader.Close();                
             }
-
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to do thing.");
+                Console.WriteLine("Couldn't update current run id.");
             }
         }
 

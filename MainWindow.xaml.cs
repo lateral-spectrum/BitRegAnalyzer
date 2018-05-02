@@ -41,10 +41,10 @@ namespace BitRegAnalyzer
         {
             SetUIMode(false);
             MainApp.Analyzer = new RegistryAnalyzer(this);
-            MainApp.Analyzer.SearchTerms = new List<string>()
-            { SearchTerm1TextBox.Text, SearchTerm2TextBox.Text, SearchTerm3TextBox.Text };
+            MainApp.Analyzer.SearchTerms = new List<string>() { SearchTerm1TextBox.Text, SearchTerm2TextBox.Text, SearchTerm3TextBox.Text };
 
-            AnalysisRunLogger.LogNewRun();            
+            AnalysisRunLogger.LogNewRun();
+            AnalysisRunLogger.UpdateCurrentRunID();
 
             Console.WriteLine("Collecting registry data");
 
@@ -79,7 +79,7 @@ namespace BitRegAnalyzer
             }
             if (Convert.ToBoolean(CheckboxRecentAppsDocs.IsChecked))
             {
-                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSave");
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32");
                 if (opened_key != null)
                 {
                     keys_to_search.Add(opened_key);
@@ -91,7 +91,7 @@ namespace BitRegAnalyzer
             }
             if (Convert.ToBoolean(CheckboxRecentTorrents.IsChecked))
             {
-                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.torrent");
+                RegistryKey opened_key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs");
                 if (opened_key != null)
                 {
                     keys_to_search.Add(opened_key);
@@ -101,8 +101,7 @@ namespace BitRegAnalyzer
                     Console.WriteLine("Recent Torrents is null.");
                 }
             }
-
-            MainApp.Analyzer = new RegistryAnalyzer(this);
+            
             Thread collection_thread = new Thread(new ThreadStart(() =>
             {
                 RegistryDataCollector[] collected_datas = MainApp.Analyzer.CollectRegistryData(keys_to_search);
